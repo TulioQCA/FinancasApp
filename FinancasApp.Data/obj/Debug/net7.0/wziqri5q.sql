@@ -1,0 +1,74 @@
+﻿IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+CREATE TABLE [USUARIO] (
+    [ID] uniqueidentifier NOT NULL,
+    [NOME] nvarchar(100) NOT NULL,
+    [EMAIL] nvarchar(50) NOT NULL,
+    [SENHA] nvarchar(40) NOT NULL,
+    [DATAHORACRIACAO] datetime NOT NULL,
+    CONSTRAINT [PK_USUARIO] PRIMARY KEY ([ID])
+);
+GO
+
+CREATE UNIQUE INDEX [IX_USUARIO_EMAIL] ON [USUARIO] ([EMAIL]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20230825235254_Initial', N'7.0.10');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+CREATE TABLE [CATEGORIA] (
+    [ID] uniqueidentifier NOT NULL,
+    [NOME] nvarchar(50) NOT NULL,
+    CONSTRAINT [PK_CATEGORIA] PRIMARY KEY ([ID])
+);
+GO
+
+CREATE TABLE [CONTA] (
+    [ID] uniqueidentifier NOT NULL,
+    [NOME] nvarchar(150) NOT NULL,
+    [DATA] date NOT NULL,
+    [VALOR] decimal(18,2) NOT NULL,
+    [OBSERVACOES] nvarchar(250) NOT NULL,
+    [USUARIOID] uniqueidentifier NOT NULL,
+    [CATEGORIAID] uniqueidentifier NOT NULL,
+    [TIPO] int NOT NULL,
+    CONSTRAINT [PK_CONTA] PRIMARY KEY ([ID]),
+    CONSTRAINT [FK_CONTA_CATEGORIA_CATEGORIAID] FOREIGN KEY ([CATEGORIAID]) REFERENCES [CATEGORIA] ([ID]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_CONTA_USUARIO_USUARIOID] FOREIGN KEY ([USUARIOID]) REFERENCES [USUARIO] ([ID]) ON DELETE NO ACTION
+);
+GO
+
+CREATE UNIQUE INDEX [IX_CATEGORIA_NOME] ON [CATEGORIA] ([NOME]);
+GO
+
+CREATE INDEX [IX_CONTA_CATEGORIAID] ON [CONTA] ([CATEGORIAID]);
+GO
+
+CREATE INDEX [IX_CONTA_USUARIOID] ON [CONTA] ([USUARIOID]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20230901225052_AddContasAndCategorias', N'7.0.10');
+GO
+
+COMMIT;
+GO
+
