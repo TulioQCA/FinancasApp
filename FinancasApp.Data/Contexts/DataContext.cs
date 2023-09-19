@@ -20,7 +20,7 @@ namespace FinancasApp.Data.Contexts
         {
             //configurando o caminho do banco de dados (connectionstring)
             //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BDFinancasApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            optionsBuilder.UseSqlServer(@"Data Source=SQL5111.site4now.net;Initial Catalog=db_a9ecda_bdfinancasapp;User Id=db_a9ecda_bdfinancasapp_admin;Password=coti1234");
+            optionsBuilder.UseSqlServer(@"Data Source=SQL8006.site4now.net;Initial Catalog=db_a9f260_financasapptulio;User Id=db_a9f260_financasapptulio_admin;Password=Tu2005kk");
         }
 
         //REGRA 3: Implementar o método 'OnModelCreating' para
